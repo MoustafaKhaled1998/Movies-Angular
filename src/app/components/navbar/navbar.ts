@@ -50,8 +50,8 @@ export class Navbar {
           label: 'Language',
           icon: 'pi pi-globe',
           items: [
-            { label: 'Help', icon: 'pi pi-question' },
-            { label: 'Logout', icon: 'pi pi-sign-out' }
+            { label: 'en' },
+            { label: 'ar'}
           ]
         }
       ];

@@ -31,7 +31,7 @@ first = 0;
   onPageChange(event: any): void {
     this.first = event.first;
     this.rows = event.rows;
-    const pageNumber = event.page + 1; // PrimeNG starts at 0
+    const pageNumber = event.page + 1;
     this.loadPage(pageNumber);
   }
 

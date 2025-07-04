@@ -6,8 +6,6 @@
       class="block  rounded shadow hover:shadow-lg transition">
       <div class="relative">
         <img [src]="tmdb.getImageUrl(movie.poster_path)" [alt]="movie.title" class="rounded-t w-full" />
-
-        <!-- Rating Badge -->
         <div
           class="absolute left-1/2 -translate-x-1/2 translate-y-1/2 bottom-0 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md"
           [ngClass]="{
@@ -34,6 +32,6 @@
     </a>
   </div>
 
-  <p-paginator [first]="first" [rows]="rows" [totalRecords]="200" [rowsPerPageOptions]="[10, 20, 30]"
+  <p-paginator [first]="first" [rows]="rows" [totalRecords]="200"
     (onPageChange)="onPageChange($event)" class="mt-10" />
 </div>
