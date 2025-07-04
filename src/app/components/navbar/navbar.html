@@ -1,0 +1,18 @@
+
+<p-menubar [model]="items">
+    <ng-template #start>
+        <img src="path/to/your/logo.png" alt="Logo" class="h-8 mr-4">       
+    </ng-template>
+    <ng-template #end>
+        <div class="flex items-center gap-1">
+             <p-inputgroup>
+    <input pInputText placeholder="Search" />
+    <p-inputgroup-addon>
+        <p-button icon="pi pi-search" severity="secondary" variant="text" (click)="menu.toggle($event)" />
+    </p-inputgroup-addon>
+</p-inputgroup>
+<p-menu #menu [model]="items" popup styleClass="!min-w-fit" />
+        </div>
+    </ng-template>
+</p-menubar>
+

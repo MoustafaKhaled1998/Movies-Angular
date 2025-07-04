@@ -1,16 +1,21 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Navbar } from "./components/navbar/navbar";
 import { RouterOutlet } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { MenubarModule } from 'primeng/menubar';
+
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet , ButtonModule, MenubarModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    Navbar,
+    RouterOutlet
+],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrls:['./app.scss']
 })
 export class App {
-  protected title = 'movie-angular';
-  items = [{label:"hello"}]
+
 }
