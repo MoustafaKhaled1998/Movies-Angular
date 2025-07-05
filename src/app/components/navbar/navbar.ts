@@ -97,8 +97,8 @@ export class Navbar {
     }
   }
 
-  onSuggestionClick(title: string) {
-    this.searchTerm.set(title);
-    this.onSearchClick();
-  }
+onSuggestionClick(movieId: number) {
+  this.showSuggestions.set(false);
+  this.router.navigate(['/moviesDetails', movieId]);
+}
 }

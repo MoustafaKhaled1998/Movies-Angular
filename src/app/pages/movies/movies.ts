@@ -26,6 +26,7 @@ export class Movies implements OnInit {
   constructor(public tmdb: FetchApi, public wishlist: WishlistService) { }
 
   ngOnInit(): void {
+    this.tmdb.fetchGenres(); 
     this.loadPage(1);
   }
 
