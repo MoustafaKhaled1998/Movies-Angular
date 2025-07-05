@@ -1,4 +1,4 @@
-import { Component, computed } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { WishlistService } from '../../whishlist';
@@ -21,12 +21,19 @@ import { TagModule } from 'primeng/tag';
   styleUrls: ['./whishlist.scss']
 })
 export class Whishlist {
-  wishlistMovies = computed(() =>
-    this.tmdb.movies().filter(movie => this.wishlist.ids.includes(movie.id))
-  );
+  wishlistMovies = signal<any[]>([]);
 
-  constructor(
-    public wishlist: WishlistService,
-    public tmdb: FetchApi
-  ) {}
+  constructor(public wishlist: WishlistService, public tmdb: FetchApi) {
+    effect(() => {
+      const ids = this.wishlist.ids;
+      if (ids.length === 0) {
+        this.wishlistMovies.set([]);
+        return;
+      }
+
+      Promise.all(ids.map(id => this.tmdb.getMovieDetails(id).toPromise()))
+        .then(results => this.wishlistMovies.set(results))
+        .catch(err => console.error('Failed to fetch wishlist movies', err));
+    });
+  }
 }

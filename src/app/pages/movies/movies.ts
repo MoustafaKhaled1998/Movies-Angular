@@ -12,17 +12,18 @@ import { WishlistService } from '../../whishlist';
 
 @Component({
   selector: 'app-movies',
+  standalone: true,
   imports: [CommonModule, RouterModule,
-     CarouselModule, ButtonModule, TagModule, FormsModule
+    CarouselModule, ButtonModule, TagModule, FormsModule
     , PaginatorModule],
   templateUrl: './movies.html',
   styleUrl: './movies.scss'
 })
 export class Movies implements OnInit {
-first = 0;
+  first = 0;
   rows = 10;
 
-  constructor(public tmdb: FetchApi, public wishlist: WishlistService) {}
+  constructor(public tmdb: FetchApi, public wishlist: WishlistService) { }
 
   ngOnInit(): void {
     this.loadPage(1);

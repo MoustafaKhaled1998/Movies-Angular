@@ -1,18 +1,41 @@
+<p-menubar [model]="items" class="bg-yellow-400 px-4">
+  <ng-template #start>
+    <img src="path/to/your/logo.png" alt="Logo" class="h-8 mr-4" />
+  </ng-template>
 
-<p-menubar [model]="items">
-    <ng-template #start>
-        <img src="path/to/your/logo.png" alt="Logo" class="h-8 mr-4">       
-    </ng-template>
-    <ng-template #end>
-        <div class="flex items-center gap-1">
-             <p-inputgroup>
-    <input pInputText placeholder="Search" />
-    <p-inputgroup-addon>
-        <p-button icon="pi pi-search" severity="secondary" variant="text" (click)="menu.toggle($event)" />
-    </p-inputgroup-addon>
-</p-inputgroup>
-<p-menu #menu [model]="items" popup styleClass="!min-w-fit" />
-        </div>
-    </ng-template>
+  <ng-template #end>
+    <div class="relative w-60">
+      <p-inputgroup>
+        <input
+          pInputText
+          type="text"
+          placeholder="Search..."
+          class="w-full"
+          [ngModel]="searchTerm()"
+          (ngModelChange)="handleInput($event)"
+        />
+        <p-inputgroup-addon>
+          <p-button
+            icon="pi pi-search"
+            severity="secondary"
+            variant="text"
+            (click)="onSearchClick()"
+          ></p-button>
+        </p-inputgroup-addon>
+      </p-inputgroup>
+
+      <ul
+        *ngIf="showSuggestions() && suggestions().length"
+        class="absolute z-50 bg-white border rounded shadow w-full mt-1 max-h-64 overflow-auto"
+      >
+        <li
+          *ngFor="let movie of suggestions()"
+          (click)="onSuggestionClick(movie.title)"
+          class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+        >
+          {{ movie.title }}
+        </li>
+      </ul>
+    </div>
+  </ng-template>
 </p-menubar>
-
