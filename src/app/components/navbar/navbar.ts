@@ -36,7 +36,6 @@ import { FormsModule } from '@angular/forms';
 export class Navbar {
   items: MenuItem[] = [];
 
-  // Live search state
   searchTerm = signal('');
   showSuggestions = signal(false);
   suggestions = signal<any[]>([]);
@@ -63,7 +62,7 @@ export class Navbar {
         {
           label: 'Language',
           icon: 'pi pi-globe',
-          items: [{ label: 'en' }, { label: 'ar' }]
+          items: [{ label: 'en' }, { label: 'ar' }, { label: 'fr' }, { label: 'zh' }]
         }
       ];
     });

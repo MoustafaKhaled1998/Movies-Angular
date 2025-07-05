@@ -2,7 +2,7 @@
     <h2 class="text-2xl font-bold mb-6">Search Results for "{{ query() }}"</h2>
 
     <div *ngIf="!results().length" class="text-center text-gray-500 mt-10">
-        No movies found 😕
+        No movies found.
     </div>
 
     <div *ngIf="results().length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

@@ -18,9 +18,13 @@ private httpOptions = {
   movies = this.movieList;
   totalPagesSignal = this.totalPages;
 
+  private tvList = signal<any[]>([]);
+private tvTotalPages = signal(1);
+tvShows = this.tvList;
+tvTotalPagesSignal = this.tvTotalPages;
+
   constructor(private http: HttpClient) {}
 
-// Fetch popular/trending movies by page
   fetchMovies(page = 1) {
     const params = new HttpParams()
       .set('language', 'en-US')
@@ -37,7 +41,6 @@ private httpOptions = {
       });
   }
 
-  // Search movies by query
   searchMovies(query: string, page = 1, language = 'en-US') {
     const params = new HttpParams()
       .set('query', query)
@@ -50,7 +53,6 @@ private httpOptions = {
     );
   }
 
-  // movie details by ID
   getMovieDetails(id: number) {
     return this.http.get<any>(
       `${this.baseUrl}/movie/${id}`,
@@ -62,7 +64,6 @@ private httpOptions = {
     return path ? `https://image.tmdb.org/t/p/w500${path}` : '';
   }
 
-  //  genre name by ID 
   genreList = signal<Record<number, string>>({});
 
   fetchGenres() {
@@ -93,6 +94,62 @@ getMovieReviews(id: number) {
     `${this.baseUrl}/movie/${id}/reviews`,
     this.httpOptions
   );
+}
+
+fetchTvShows(page = 1) {
+  const params = new HttpParams()
+    .set('language', 'en-US')
+    .set('page', page.toString());
+
+  this.http
+    .get<{ results: any[]; total_pages: number }>(
+      `${this.baseUrl}/tv/popular`,
+      { ...this.httpOptions, params }
+    )
+    .subscribe((res) => {
+      this.tvList.set(res.results);
+      this.tvTotalPages.set(res.total_pages);
+    });
+}
+
+getTvDetails(id: number) {
+  return this.http.get<any>(
+    `${this.baseUrl}/tv/${id}`,
+    this.httpOptions
+  );
+}
+
+getTvRecommendations(id: number) {
+  return this.http.get<{ results: any[] }>(
+    `${this.baseUrl}/tv/${id}/recommendations`,
+    this.httpOptions
+  );
+}
+
+getTvReviews(id: number) {
+  return this.http.get<{ results: any[] }>(
+    `${this.baseUrl}/tv/${id}/reviews`,
+    this.httpOptions
+  );
+}
+
+tvGenreList = signal<Record<number, string>>({});
+
+fetchTvGenres() {
+  this.http
+    .get<{ genres: { id: number; name: string }[] }>(
+      `${this.baseUrl}/genre/tv/list`,
+      this.httpOptions
+    )
+    .subscribe((res) => {
+      const genreMap: Record<number, string> = {};
+      res.genres.forEach((g) => (genreMap[g.id] = g.name));
+      this.tvGenreList.set(genreMap);
+    });
+}
+
+getTvGenreName(id: number): string {
+  return this.tvGenreList()[id] || 'Unknown';
 }
 }
 
